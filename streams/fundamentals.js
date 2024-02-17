@@ -28,7 +28,7 @@ class InverseNumberStream extends Transform {
   }
 }
 
-// 3 types streams =>  streams writing
+// 3 types streams =>  streams writing = process data
 class MultiplyByTenStream extends Writable {
   _write(chunk, encoding, callback) {
     console.log(Number(chunk.toString()) *10)
