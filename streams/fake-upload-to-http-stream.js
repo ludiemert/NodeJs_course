@@ -1,4 +1,4 @@
-import { Readable } from 'node:stream'
+import { Readable } from "node:stream";
 
 // 3 types streams =>  streams reading => req => ReadableStream
 class OneToHundredStream extends Readable {
@@ -8,7 +8,7 @@ class OneToHundredStream extends Readable {
     const i = this.index++;
 
     setTimeout(() => {
-      if (i > 100) {
+      if (i > 5) {
         this.push(null);
       } else {
         const buf = Buffer.from(String(i));
@@ -19,8 +19,14 @@ class OneToHundredStream extends Readable {
   }
 }
 
-fetch('http://localhost:3334', {
-  method: 'POST',
+fetch("http://localhost:3334", {
+  method: "POST",
   body: new OneToHundredStream(),
-  duplex: 'half'
+  duplex: "half",
 })
+  .then((response) => {
+    return response.text();
+  })
+  .then((data) => {
+    console.log(data);
+  });

@@ -12,7 +12,7 @@ import http from "node:http";
 // GET, POST, PUT, PATCH, DELETE
 // GET => Fetch a resource from the back-end (Buscar um recurso = Fetch a resource)
 // POST => Create a resource in the back-end
-// PUT => Update a resource in the back-end 
+// PUT => Update a resource in the back-end
 // PATCH => Update specific information about a resource in the back-end
 // DELETE => Delete a resource from the back-end
 
@@ -35,30 +35,45 @@ Server error responses (500 – 599)
 
 */
 
+const users = [];
 
-const users = []
+const server = http.createServer(async (req, res) => {
+  const { method, url } = req;
 
-const server = http.createServer((req, res) => {
-  const { method, url } = req
+  const buffers = [];
 
-  if (method === 'GET' && url === '/users') {
-    return res
-    .setHeader('Content-type', 'application/json')
-    .end(JSON.stringify(users))
+  for await (const chunk of req) {
+    buffers.push(chunk);
   }
 
-  if (method === 'POST' && url === '/users') {
+  try {
+    req.body = JSON.parse(Buffer.concat(buffers).toString());
+  } catch {
+    req.body = null
+  }
+
+  //console.log(body)
+
+  if (method === "GET" && url === "/users") {
+    return res
+      .setHeader("Content-type", "application/json")
+      .end(JSON.stringify(users));
+  }
+
+  if (method === "POST" && url === "/users") {
+    const { name, email } = req.body;
+
     users.push({
       id: 1,
-      name: 'John Dane',
-      email: 'johndane@gmail.com',
-    })
-    return res.writeHead(201).end()
+      name,
+      email,
+    });
+    return res.writeHead(201).end();
   }
 
-  return res.writeHead(404).end('Not Found!!!')
-
+  return res.writeHead(404).end("Not Found!!!");
 });
 
-server.listen(3333);
 //http://localhost:3333/
+server.listen(3333);
+console.log('Http server running!!!! "API-👌" ');
