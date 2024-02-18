@@ -1,6 +1,6 @@
 import { Readable } from 'node:stream'
 
-// 3 types streams =>  streams reading
+// 3 types streams =>  streams reading => req => ReadableStream
 class OneToHundredStream extends Readable {
   index = 1;
 
@@ -21,5 +21,6 @@ class OneToHundredStream extends Readable {
 
 fetch('http://localhost:3334', {
   method: 'POST',
-  body: new OneToHundredStream()
+  body: new OneToHundredStream(),
+  duplex: 'half'
 })

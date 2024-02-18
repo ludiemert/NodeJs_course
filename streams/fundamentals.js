@@ -1,7 +1,7 @@
 import { Readable, Writable, Transform } from "node:stream";
 
 
-// 3 types streams =>  streams reading
+// 3 types streams =>  streams reading => req => ReadableStream
 class OneToHundredStream extends Readable {
   index = 1;
 
@@ -28,7 +28,7 @@ class InverseNumberStream extends Transform {
   }
 }
 
-// 3 types streams =>  streams writing = process data
+// 3 types streams =>  streams writing = process data => res => WritableStream
 class MultiplyByTenStream extends Writable {
   _write(chunk, encoding, callback) {
     console.log(Number(chunk.toString()) *10)
