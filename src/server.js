@@ -31,6 +31,7 @@ torná-lo mutável através da gerência de estados*/
 // headers (requests / response) => Metadata
 
 /*HTTP status code
+
 Informational responses (100 – 199)
 Successful responses (200 – 299)
 Redirection messages (300 – 399)
@@ -38,6 +39,19 @@ Client error responses (400 – 499)
 Server error responses (500 – 599)
 
 */
+
+// Query Parameters: URL Stateful => Filtros, paginação, não-obrigatórios
+// Route Parameters: Identificação de recurso
+// Request Body: Envio de informações de um formulário (HTTPs)
+
+//http://localhost:3333/users?userId=1&name=Diego
+
+// GET http://localhost:3333/users/1
+// DELETE http: //localhost:3333/users/1
+
+// POST http://localhost:3333/users
+
+// Edição e remoção
 
 
 const server = http.createServer(async (req, res) => {
