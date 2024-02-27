@@ -60,11 +60,17 @@ const server = http.createServer(async (req, res) => {
   await json(req, res)
 
   const route = routes.find(route => {
-    return route.method === method && route.path === url
+    return route.method === method && route.path.test(url)
   })
   //console.log(route)
 
   if (route) {
+    const routeParams = req.url.match(route.path)
+
+  req.params = { ...routeParams.groups }
+
+    //console.log(params)
+
     return route.handler(req, res)
   }
 
