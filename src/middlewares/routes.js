@@ -7,6 +7,8 @@ const database = new Database();
 
 //routes my application
 export const routes = [
+
+ // GET => Fetch a resource from the back-end (Buscar um recurso = Fetch a resource)
   {
     method: "GET",   //list
     path: buildRoutePath('/users'), //url
@@ -17,6 +19,7 @@ export const routes = [
     },
   },
 
+  // POST => Create a resource in the back-end
   {
     method: "POST",
     path: buildRoutePath ('/users'), //url
@@ -34,6 +37,26 @@ export const routes = [
       return res.writeHead(201).end();
     },
   },
+
+  // PUT => Update a resource in the back-end
+  {
+    method: 'PUT',
+    path: buildRoutePath('/users/:id'),
+    handler: (req, res) => {
+    //  console.log(req.params)
+    const { id } = req.params
+    const { name, email } = req.body
+
+    database.update('users', id, {
+      name,
+      email,
+    })
+
+    //204 => response  okay not content
+      return res.writeHead(204).end()
+    },
+  },
+
 
   {
     method: 'DELETE',
